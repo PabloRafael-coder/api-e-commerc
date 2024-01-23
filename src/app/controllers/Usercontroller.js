@@ -8,7 +8,7 @@
             const schema = Yup.object().shape({
                 name: Yup.string().required(),
                 email: Yup.string().email().required(),
-                password_hash: Yup.string().required().min(6),
+                password: Yup.string().required().min(6),
                 admin: Yup.boolean()
             })
 
@@ -18,10 +18,10 @@
                 return response.status(400).json({error: error.errors})
             }
 
-            const { name, email, password_hash, admin } = request.body;
+            const { name, email, password, admin } = request.body;
 
             const userExists = await User.findOne ({
-                where: {email},
+                where: {email}
             })
 
             if(userExists) {
@@ -32,11 +32,11 @@
             id: v4(),
             name,
             email,
-            password_hash,
+            password,
             admin,
             });
             return response.json(user);
         }
         }
 
-    export default new UserController();
+    export default new UserController()
