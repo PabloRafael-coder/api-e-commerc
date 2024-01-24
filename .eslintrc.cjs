@@ -23,6 +23,6 @@ module.exports = {
   rules: {
     camelcase: 'off',
     'prettier/prettier': 'error',
-    'end0fLine': 'auto',
+    end0fLine: 'auto',
   },
 };
