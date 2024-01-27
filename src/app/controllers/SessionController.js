@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import jwt from 'jsonwebtoken'
+import authConfig from '../../config/auth'
 import User from '../models/User';
 
 import * as Yup from 'yup';
@@ -20,7 +22,15 @@ class SessionController {
                 return response.status(401).json({ error: 'Invalid email or password' });
             }
 
-            return response.json({ name: user.name, email, admin: user.admin });
+            return response.json({
+                name: user.name,
+                email,
+                admin: user.admin,
+                token: jwt.sign({ id: user.id }, authConfig.secret, {
+                    expiresIn: authConfig.expiresIn
+                })
+            });
+
         } catch (error) {
             return response.status(400).json({ error: 'Validation failed', messages: error.inner });
         }
