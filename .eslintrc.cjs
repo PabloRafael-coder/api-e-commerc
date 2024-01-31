@@ -21,8 +21,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    camelcase: 'off',
-    'prettier/prettier': 'error',
-    end0fLine: 'auto',
+    camelcase:'off',
   },
 };

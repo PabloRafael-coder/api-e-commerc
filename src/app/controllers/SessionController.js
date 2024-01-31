@@ -4,9 +4,6 @@ import jwt from 'jsonwebtoken'
 import authConfiguration from '../../config/auth'
 import User from '../models/User';
 
-
-import User from '../models/User';
-
 class SessionController {
     async store(request, response) {
         const { email, password } = request.body;
