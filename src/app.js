@@ -5,11 +5,13 @@ import './database/'
 
 
 
+
 class App {
   constructor() {
     this.app = express();
     this.midlleware();
     this.routes();
+
   }
 
   midlleware() {
