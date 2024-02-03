@@ -20,19 +20,19 @@ class CategoryController {
 
 
         const categoryExist = await Category.findOne({
-            where: { 
+            where: {
                 name,
             },
         })
 
-        const category = await Category.create({ name })
-
-
-        if(categoryExist){
-            return response.status(400).json({error: 'Category already exists'})
-        } else {
-            return response.json(category)
+        if (categoryExist) {
+            return response.status(400).json({ error: 'Category already exists' })
         }
+
+        const { id } = await Category.create({ name })
+
+        return response.json({ id, name })
+
 
     }
 
