@@ -14,6 +14,7 @@ export default (request, response, next) => {
             }
 
             request.UserId = decoded.id
+            request.UserName = decoded.name
 
         })
 
