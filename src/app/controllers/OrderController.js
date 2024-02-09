@@ -14,17 +14,16 @@ class OrderController {
                         quantity: Yup.number().required(),
                     })
                 )
-            })
-            .validate(request.body, { abortEarly: false })
+            }).validate(request.body, { abortEarly: false })
         } catch (error) {
             return response.status(400).json({ error: error.errors })
-        } 
+        }
 
-        const productsId = request.body.products.map( (product) => product.id )
+        const productsId = request.body.products.map((product) => product.id)
 
-        const orderProducts = await Product.findAll({
+        const updateProducts = await Product.findAll({
             where: {
-                id: productsId,
+                id: productsId
             },
             include: [
                 {
@@ -35,6 +34,23 @@ class OrderController {
             ]
         })
 
+
+        const listedProducts = updateProducts.map((product) => {
+
+            const indexProducts = request.body.products.findIndex((requestProducts) => requestProducts.id === product.id);
+
+            const newProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                category: product.category.name,
+                url: product.url,
+                quantity: request.body.products[indexProducts].quantity
+            }
+
+            return newProduct;
+        })
+
         const order = {
             user: {
                 id: request.UserId,
@@ -42,7 +58,7 @@ class OrderController {
             }
         }
 
-        return response.status(201).json(orderProducts);
+        return response.status(201).json(listedProducts);
     }
 }
 
