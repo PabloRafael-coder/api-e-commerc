@@ -55,7 +55,8 @@ class OrderController {
             user: {
                 id: request.UserId,
                 name: request.UserName
-            }
+            },
+            products: listedProducts
         }
 
         return response.status(201).json(listedProducts);
