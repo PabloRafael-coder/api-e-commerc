@@ -2,6 +2,8 @@
 import * as Yup from 'yup'
 import Product from '../models/Product'
 import Category from '../models/Category'
+import Order from '../schema/Order'
+import User from '../models/User'
 
 class OrderController {
     async store(request, response) {
@@ -52,14 +54,47 @@ class OrderController {
         })
 
         const order = {
-            user: {
+            User: {
                 id: request.UserId,
                 name: request.UserName
             },
-            products: listedProducts
+            products: listedProducts,
+            status: 'Pedido realizado',
+
         }
 
-        return response.status(201).json(listedProducts);
+        const OrderResponse = await Order.create(order)
+
+        return response.status(201).json(OrderResponse);
+    }
+
+    async index(request, response) {
+
+        const orders = await Order.find()
+
+        return response.json(orders)
+
+    }
+
+    async update(request, response) {
+        const { id } = request.params
+
+        const { status } = request.body
+
+        const { admin: isAdmin } = await User.findByPk(request.UserId)
+
+        if(!isAdmin) {
+            return response.status(401).json()
+        }
+
+
+        try {
+            await Order.updateOne({ _id: id, status })
+
+            return response.json({ message: 'Status updated successfully' })
+        } catch (error) {
+            return response.status(400).json({ error: error.message })
+        }
     }
 }
 

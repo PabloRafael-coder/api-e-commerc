@@ -29,21 +29,25 @@ const orderSchema = new mongoose.Schema({
             },
             category: {
                 type: String,
-                required: true
+                required: true,
             },
             url: {
                 type: String,
-                required: true
+                required: true,
             },
             quantity: {
                 type: Number,
-                required: true
+                required: true,
             },
         }
     ],
-    status: String,
-    required: true
-}, {
+    status: {
+        type: String,
+        required: true
+    }
+
+}, 
+{
     timestamps: true,
 }
 );

@@ -1,11 +1,9 @@
 import * as Yup from 'yup';
 import Product from '../models/Product'
 import Category from '../models/Category';
+import User from '../models/User'
 class ProductController {
     async store(request, response) {
-
-        const { name, price, category_id } = request.body;
-        const { filename: path } = request.file;
 
         try {
             await Yup.object().shape({
@@ -15,6 +13,17 @@ class ProductController {
             }).validate(request.body, { abortEarly: false });
         } catch (err) {
             return response.status(400).json({ error: err.errors });
+        }
+
+        
+        const { name, price, category_id } = request.body;
+        const { filename: path } = request.file;
+        
+
+        const { admin: isAdmin } = await User.findByPk(request.UserId)
+
+        if(!isAdmin) {
+            return response.status(401).json()
         }
 
 
