@@ -9,6 +9,7 @@ class ProductController {
             await Yup.object().shape({
                 name: Yup.string().required(),
                 price: Yup.number().required(),
+                offer: Yup.number().required(),
                 category_id: Yup.number().required(),
             }).validate(request.body, { abortEarly: false });
         } catch (err) {

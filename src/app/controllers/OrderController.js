@@ -81,6 +81,8 @@ class OrderController {
 
         const { status } = request.body
 
+
+
         const { admin: isAdmin } = await User.findByPk(request.UserId)
 
         if(!isAdmin) {
@@ -89,7 +91,12 @@ class OrderController {
 
 
         try {
+            await Yup.object().shape({
+                status: Yup.string().required(),
+            }).validate(request.body, { abortEarly: false });
+            
             await Order.updateOne({ _id: id, status })
+
 
             return response.json({ message: 'Status updated successfully' })
         } catch (error) {

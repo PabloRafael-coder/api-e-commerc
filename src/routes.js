@@ -21,14 +21,16 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authToken)
 
-routes.post('/products', upload.single('file'), ProductController.store);
 routes.get('/products', ProductController.index);
+routes.post('/products', upload.single('file'), ProductController.store);
 
-routes.post('/categories', CategoryController.store);
+
 routes.get('/categories', CategoryController.index);
+routes.post('/categories', CategoryController.store);
 
-routes.post('/orders', OrderController.store);
+
 routes.get('/orders', OrderController.index);
+routes.post('/orders', OrderController.store);
 routes.put('/orders/:id', OrderController.update)
 
 
