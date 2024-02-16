@@ -14,7 +14,7 @@ class UserController {
                 email: Yup.string().email().required(),
                 password: Yup.string().required().min(6),
                 admin: Yup.boolean()
-            }).validateSync(request.body, { abortEarly: false })
+            }).validate(request.body, { abortEarly: false })
         } catch (error) {
             return response.status(400).json({ error: error.errors })
         }

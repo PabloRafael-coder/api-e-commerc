@@ -77,10 +77,10 @@ class OrderController {
     }
 
     async update(request, response) {
+
         const { id } = request.params
 
         const { status } = request.body
-
 
 
         const { admin: isAdmin } = await User.findByPk(request.UserId)
